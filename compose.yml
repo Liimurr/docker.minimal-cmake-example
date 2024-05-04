@@ -1,0 +1,11 @@
+services:
+  cmake:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${CMAKE_PROJECT_NAME}
+    image: ${CMAKE_PROJECT_NAME}-image
+    volumes:
+      - ./app:/app
+    environment:
+      - CMAKE_PROJECT_NAME=minimal-cmake-example

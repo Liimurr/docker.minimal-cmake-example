@@ -7,7 +7,8 @@ ADD ./app /app
 RUN apt-get update && apt-get install -y \
   wget \
   build-essential \ 
-  libncurses5   
+  libncurses5 \
+  libicu-dev
 
 # install clang
 ENV LLVM_HOME=/opt/llvm/18.1.4
@@ -28,6 +29,7 @@ RUN rm /tmp/cmake.tar.gz
 # install pwsh
 ENV PWSH_HOME=/opt/pwsh/7.4.2
 ENV PATH=${PWSH_HOME}:$PATH
+RUN mkdir -p ${PWSH_HOME}
 RUN wget -q https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/powershell-7.4.2-linux-x64.tar.gz -O /tmp/pwsh.tar.gz
 RUN tar -xvf /tmp/pwsh.tar.gz -C ${PWSH_HOME}
 RUN rm /tmp/pwsh.tar.gz

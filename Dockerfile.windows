@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/windows:20H2
+SHELL ["powershell"]
+
+# install cmake
+ENV CMAKE_HOME='c:/cmake/3.29.2'
+RUN [Environment]::SetEnvironmentVariable('PATH', \"$env:PATH;$env:CMAKE_HOME/bin\", [System.EnvironmentVariableTarget]::Machine)
+RUN Invoke-WebRequest -Uri 'https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.2-windows-x86_64.zip' -OutFile 'cmake.zip'
+RUN New-Item -ItemType Directory -Path $env:CMAKE_HOME -Force
+RUN tar -xvf cmake.zip --strip-components=1 -C $env:CMAKE_HOME
+RUN Remove-Item -Path 'cmake.zip' -Force
+
+# install pwsh
+ENV POWERSHELL_HOME='c:/pwsh/7.4.2'
+RUN [Environment]::SetEnvironmentVariable('PATH', \"$env:PATH;$env:POWERSHELL_HOME\", [System.EnvironmentVariableTarget]::Machine)
+RUN Invoke-WebRequest -Uri 'https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip' -OutFile 'pwsh.zip'
+RUN New-Item -ItemType Directory -Path $env:POWERSHELL_HOME -Force
+RUN tar -xvf pwsh.zip -C $env:POWERSHELL_HOME
+RUN Remove-Item -Path 'pwsh.zip' -Force
+
+CMD ["cmd", "/c", "ping", "-t", "localhost", ">", "NUL"]

@@ -1,0 +1,11 @@
+services:
+  cmake-windows:
+    build: 
+      context: .
+      dockerfile: Dockerfile.windows
+    container_name: cmake
+    image: cmake-image
+    volumes:
+      - ./app:c:/app
+    environment:
+      - CMAKE_PROJECT_NAME=minimal-cmake-example

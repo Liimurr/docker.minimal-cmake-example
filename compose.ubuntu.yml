@@ -1,0 +1,12 @@
+services:
+  cmake-ubuntu:
+    build: 
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: cmake
+    image: cmake-image
+    volumes:
+      - ./app:/app
+    environment:
+      - CMAKE_PROJECT_NAME=minimal-cmake-example
+  

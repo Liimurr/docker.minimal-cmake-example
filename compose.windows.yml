@@ -1,5 +1,5 @@
 services:
-  cmake-windows:
+  cmake:
     build: 
       context: .
       dockerfile: Dockerfile.windows
@@ -9,3 +9,12 @@ services:
       - ./app:c:/app
     environment:
       - CMAKE_PROJECT_NAME=minimal-cmake-example
+    # fix for docker compose windows container bug
+    networks:
+      - default_net
+
+# fix for docker compose windows container bug
+networks:
+  default_net:
+    external: true
+    name: nat

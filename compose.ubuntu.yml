@@ -1,5 +1,5 @@
 services:
-  cmake-ubuntu:
+  cmake:
     build: 
       context: .
       dockerfile: Dockerfile.ubuntu
@@ -9,4 +9,3 @@ services:
       - ./app:/app
     environment:
       - CMAKE_PROJECT_NAME=minimal-cmake-example
-  

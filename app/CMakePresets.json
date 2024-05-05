@@ -3,25 +3,71 @@
   "cmakeMinimumRequired": {"major": 3, "minor": 29},
   "configurePresets": [
     {
-      "name": "default",
+      "name": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       },
       "binaryDir": "${sourceDir}/build"
+    },
+    {
+      "name": "unix",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "windows",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl"
+      }
+    },
+    {
+      "name": "windows-clang",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl",
+        "CMAKE_CXX_COMPILER": "clang-cl"
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "default",
-      "configurePreset": "default"
+      "name": "unix",
+      "configurePreset": "unix"
+    },
+    {
+      "name": "windows",
+      "configurePreset": "windows"
+    },
+    {
+      "name": "windows-clang",
+      "configurePreset": "windows-clang"
     }
   ],
   "workflowPresets": [
     {
-      "name": "default",
+      "name": "unix",
       "steps": [
-        { "type": "configure", "name": "default" },
-        { "type": "build", "name": "default" }
+        { "type": "configure", "name": "unix" },
+        { "type": "build", "name": "unix" }
+      ]
+    },
+    {
+      "name": "windows",
+      "steps": [
+        { "type": "configure", "name": "windows" },
+        { "type": "build", "name": "windows" }
+      ]
+    },
+    {
+      "name": "windows-clang",
+      "steps": [
+        { "type": "configure", "name": "windows-clang" },
+        { "type": "build", "name": "windows-clang" }
       ]
     }
   ]

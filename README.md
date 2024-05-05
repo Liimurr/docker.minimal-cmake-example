@@ -5,7 +5,7 @@
 ```
 
 # Build
-use build-and-run.ps1 from the root directory to start a docker image and build the cmake project
+Use build-and-run.ps1 from the root directory to start a docker image and build the cmake project
 
 # See Also
 - https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#use-a-configuration-file-to-initialize-the-contents-of-a-layout

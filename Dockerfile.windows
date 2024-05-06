@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/windows:20H2
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; Set-ExecutionPolicy Unrestricted;"]
+SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; Set-ExecutionPolicy Unrestricted;"]
 
 ENV CMAKE_VERSION='3.29.2'
 ENV PWSH_VERSION='7.4.2'

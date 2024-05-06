@@ -6,8 +6,11 @@ ENV PWSH_VERSION='7.4.2'
 ENV VS_VERSION='17'
 ENV VS_YEAR='2022'
 
-# install cmake
 ENV CMAKE_HOME="c:/cmake/${CMAKE_VERSION}"
+ENV PWSH_HOME="c:/pwsh/${PWSH_VERSION}"
+ENV VCVARS_HOME="C:/Program Files/Microsoft Visual Studio/${VS_YEAR}/Community/VC/Auxiliary/Build"
+
+# install cmake
 RUN Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' 'PATH' \"$env:PATH;%CMAKE_HOME%/bin\" -Type 'ExpandString'
 RUN [System.Environment]::SetEnvironmentVariable('CMAKE_HOME', "${env:CMAKE_HOME}", 'Machine')
 RUN Invoke-WebRequest -Uri https://github.com/Kitware/CMake/releases/download/v${env:CMAKE_VERSION}/cmake-${env:CMAKE_VERSION}-windows-x86_64.zip -OutFile 'cmake.zip'
@@ -16,16 +19,14 @@ RUN tar -xvf cmake.zip --strip-components=1 -C $env:CMAKE_HOME
 RUN Remove-Item -Path 'cmake.zip' -Force
 
 # install pwsh
-ENV POWERSHELL_HOME="c:/pwsh/${PWSH_VERSION}"
-RUN Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' 'PATH' \"$env:PATH;%POWERSHELL_HOME%/bin\" -Type 'ExpandString'
-RUN [System.Environment]::SetEnvironmentVariable('POWERSHELL_HOME', "${env:POWERSHELL_HOME}", 'Machine')
+RUN Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' 'PATH' \"$env:PATH;%PWSH_HOME%\" -Type 'ExpandString'
+RUN [System.Environment]::SetEnvironmentVariable('PWSH_HOME', "${env:PWSH_HOME}", 'Machine')
 RUN Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v${env:PWSH_VERSION}/PowerShell-${env:PWSH_VERSION}-win-x64.zip -OutFile 'pwsh.zip'
-RUN New-Item -ItemType Directory -Path $env:POWERSHELL_HOME -Force
-RUN tar -xvf pwsh.zip -C $env:POWERSHELL_HOME
+RUN New-Item -ItemType Directory -Path $env:PWSH_HOME -Force
+RUN tar -xvf pwsh.zip -C $env:PWSH_HOME
 RUN Remove-Item -Path 'pwsh.zip' -Force
 
 # install vs
-ENV VCVARS_HOME="C:/Program Files/Microsoft Visual Studio/${VS_YEAR}/Community/VC/Auxiliary/Build"
 COPY ./docker/windows/vscomponents.ps1 ./vscomponents.ps1
 RUN Invoke-WebRequest -Uri  https://aka.ms/vs/${env:VS_VERSION}/release/vs_community.exe -OutFile 'vs_community.exe'
 RUN . ./vscomponents.ps1; \
